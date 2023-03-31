@@ -93,4 +93,35 @@ class TableViewCell: UITableViewCell {
             maxTemperature.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
+//MARK: - Configure
+    
+//    func configure(listModel: ListModel?) {
+//        if let degree = listModel?.main.temp {
+//            degrees.text = Int(degree).description + "°"
+//        }
+//        if let date = listModel?.dtTxt {
+//            time.text = DatesFormatter.dateFormater(date: date, format: "HH")
+//        }
+//        if let imageName = listModel?.weather.last?.icon {
+//            weatherImage.image = UIImage(named: imageName)
+//        }
+        
+    func configure(sortedListModel: SortedListModel?) {
+        
+        if let allTime = sortedListModel?.dtTxt {
+            weekDayLabel.text = DatesFormatter.dateFormater(date: allTime, format: "EEEE dd")
+        }
+        
+        if let nameImage = sortedListModel?.weather.last?.icon {
+            weatherConditionIcon.image = UIImage(named: nameImage)
+        }
+        
+        if let minDegrees = sortedListModel?.main.tempMin {
+            minTemperature.text = "\(minDegrees)°"
+        }
+        
+        if let maxDegrees = sortedListModel?.main.tempMin{
+            maxTemperature.text = "\(maxDegrees)°"
+        }
+    }
 }

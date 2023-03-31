@@ -28,21 +28,8 @@ extension WeatherView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cellid") as? TableViewCell else { return UITableViewCell() }
         
-        guard let allTimeModel = weatherModel?.sortedWeatherModel.list.map({$0.dtTxt}) else {return UITableViewCell()}
-        let allTime = allTimeModel[indexPath.row]
-        cell.weekDayLabel.text = dateFormater(datef: allTime)
-        
-        guard let nameImage = weatherModel?.sortedWeatherModel.list.map({$0.weather}).compactMap({$0.last?.icon}) else {return UITableViewCell()}
-        let nameString = nameImage[indexPath.row]
-        cell.weatherConditionIcon.image = setImage(name: nameString)
-        
-        guard let allMinDegrees = weatherModel?.sortedWeatherModel.list.map({$0.main.tempMin}) else {return UITableViewCell()}
-        let allMinDegreesInt = doubleToInteger(data: allMinDegrees)
-        cell.minTemperature.text = "\(allMinDegreesInt[indexPath.row])°"
-        
-        guard let allMaxDegrees = weatherModel?.sortedWeatherModel.list.map({$0.main.tempMax}) else {return UITableViewCell()}
-        let allMaxDegreesInt = doubleToInteger(data: allMaxDegrees)
-        cell.maxTemperature.text = "\(allMaxDegreesInt[indexPath.row])°"
+        let model = weatherModel?.sortedWeatherModel.list[indexPath.item]
+        cell.configure(sortedListModel: model)
         cell.backgroundColor = .clear.withAlphaComponent(0.15)
         cell.selectionStyle = .none
         cell.prepareForReuse()
